@@ -3,37 +3,35 @@ import { Link } from "react-router-dom";
 import { MovieContext } from "../context/MovieContext";
 import Input from "../components/Input";
 import Card from "../components/Card";
-import "../styles/Home.css";
+import moment from "moment";
+import _ from "lodash";
+import "../styles/Home.scss";
+import '../styles/styles.scss';
+
 
 const Home = () => {
   const { setSearch, movies, favoriteHandler, setYear, setContentType } = useContext(MovieContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(10);
-  //const [contentType, setContentType] = useState("movie"); // Default: Movies
   const [year, setYearFilter] = useState(""); // Year filter state
 
-  // Handle search input change
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  // Handle year filter change
   const handleYearChange = (e) => {
     setYearFilter(e.target.value);
     setYear(e.target.value); // Update year in context
   };
 
-  // Handle content type change (Movies, TV Series, Episodes)
   const handleContentTypeChange = (e) => {
     setContentType(e.target.value);
   };
 
-  // Pagination: Get current movies for the page
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
   const currentMovies = movies?.slice(indexOfFirstMovie, indexOfLastMovie);
 
-  // Change page handler
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
@@ -45,8 +43,8 @@ const Home = () => {
       <Input handleSearch={handleSearch} />
 
       {/* Content Type Filter */}
-      <div className="filters">
-        <select onChange={handleContentTypeChange} >
+      <div className="filters form-inline">
+        <select className="form-control mb-2 mr-sm-2" onChange={handleContentTypeChange} defaultValue="movie">
           <option value="movie">Movies</option>
           <option value="series">TV Series</option>
           <option value="episode">TV Series Episodes</option>
@@ -55,6 +53,7 @@ const Home = () => {
         {/* Year Filter */}
         <input
           type="number"
+          className="form-control mb-2 mr-sm-2"
           placeholder="Enter Year"
           value={year}
           onChange={handleYearChange}
@@ -64,9 +63,8 @@ const Home = () => {
       {movies?.length > 0 ? (
         <>
           {/* Movie Grid/Table */}
-          
-          <table className="movies-table">
-            <thead>
+          <table className="table table-striped">
+            <thead className="thead-dark">
               <tr>
                 <th>Title</th>
                 <th>Release Date</th>
@@ -82,13 +80,13 @@ const Home = () => {
                       {movie.Title}
                     </Link>
                   </td>
-                  <td>{movie.Year}</td>
+                  <td>{moment(movie.Year, "YYYY").format("MMMM YYYY")}</td>
                   <td>{movie.imdbID}</td>
                   <td>
                     <Card
                       image={movie.Poster}
                       title={movie.Title}
-                      year={movie.Year}
+                      year={moment(movie.Year, "YYYY").format("MMMM YYYY")}
                       addFavorite={(e) => favoriteHandler(movie, e)}
                       isFavorite={movie.isFavorite}
                     />
@@ -97,21 +95,22 @@ const Home = () => {
               ))}
             </tbody>
           </table>
+
           {/* Pagination */}
-          <div className="pagination">
-            {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => paginate(index + 1)}
-                className={currentPage === index + 1 ? "active" : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          <nav aria-label="Page navigation">
+            <ul className="pagination">
+              {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (
+                <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
+                  <button className="page-link" onClick={() => paginate(index + 1)}>
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </>
       ) : (
-        <div className="search-warning">
+        <div className="alert alert-warning" role="alert">
           <p>Search a movie!</p>
           <p>i.e. Ted</p>
         </div>

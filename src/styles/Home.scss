@@ -1,0 +1,97 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff !important;
+  background-color: #00000077 !important;
+  min-height: 100vh !important;
+
+  .filters {
+    margin: 20px 0 !important;
+
+    input, select {
+      padding: 10px !important;
+      border: 1px solid #555 !important;
+      border-radius: 5px !important;
+      font-size: 16px !important;
+      background-color: #333 !important;
+      color: #fff !important; // Beyaz yazı rengi
+
+      // Placeholder için özel stil
+      &::placeholder {
+        color: #bbb !important; // Gri placeholder metni
+      }
+    }
+  }
+
+  .movies-table {
+    width: 80% !important;
+    border-collapse: collapse !important;
+    margin: 20px 0 !important;
+  }
+
+  table.table {
+    thead.thead-dark {
+      th {
+        color: #fff !important; // Beyaz başlık yazıları
+        background-color: #343a40 !important; // Koyu başlık arka plan rengi
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: #222 !important; // Satırlar için koyu gri arka plan
+        color: #f8f9fa !important; // Beyaz yazı rengi
+
+        &:nth-child(even) {
+          background-color: #2a2a2a !important; // Çift satırlar için biraz daha açık bir ton
+        }
+
+        &:hover {
+          background-color: #444 !important; // Hover sırasında daha belirgin arka plan
+          color: #fff !important; // Yazılar beyaz
+        }
+
+        td {
+          padding: 10px !important;
+          border: 1px solid #555 !important; // Hücre kenarlıkları
+        }
+
+        a {
+          color: #007bff !important; // Bağlantılar için mavi
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .pagination {
+    display: flex !important;
+    gap: 10px !important;
+    margin: 20px 0 !important;
+
+    button {
+      padding: 5px 10px !important;
+      border: 1px solid #555 !important;
+      border-radius: 3px !important;
+      cursor: pointer !important;
+      background-color: #333 !important;
+      color: #fff !important;
+
+      &.active {
+        background-color: #007bff !important;
+        color: white !important;
+        font-weight: bold !important;
+      }
+    }
+  }
+
+  .alert-warning {
+    background-color: #333 !important;
+    color: #fff !important;
+  }
+}

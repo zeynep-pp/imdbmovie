@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import { routes } from './config/Router';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
 function App() {
   return (
     <Router>

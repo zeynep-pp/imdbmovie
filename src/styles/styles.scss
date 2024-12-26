@@ -1,0 +1,28 @@
+// Import Bootstrap functions, variables, and mixins
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+// Enable dark mode
+$enable-dark-mode: true;
+$body-bg: #121212; // Set dark background
+$body-color: #f8f9fa; // Light text color
+
+// Import the rest of Bootstrap styles
+@import '~bootstrap/scss/bootstrap';
+
+// Add custom overrides if necessary
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff; // Ensure headings use light text
+}
+
+button {
+  background-color: #1f1f1f;
+  border-color: #333;
+  color: #f8f9fa;
+
+  &:hover {
+    background-color: #333;
+    border-color: #444;
+  }
+}
