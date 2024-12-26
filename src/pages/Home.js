@@ -6,13 +6,26 @@ import Card from "../components/Card";
 import "../styles/Home.css";
 
 const Home = () => {
-  const { setSearch, movies, favoriteHandler } = useContext(MovieContext);
+  const { setSearch, movies, favoriteHandler, setYear } = useContext(MovieContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(10);
+  const [contentType, setContentType] = useState("movie"); // Default: Movies
+  const [year, setYearFilter] = useState(""); // Year filter state
 
   // Handle search input change
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  // Handle year filter change
+  const handleYearChange = (e) => {
+    setYearFilter(e.target.value);
+    setYear(e.target.value); // Update year in context
+  };
+
+  // Handle content type change (Movies, TV Series, Episodes)
+  const handleContentTypeChange = (e) => {
+    setContentType(e.target.value);
   };
 
   // Pagination: Get current movies for the page
@@ -30,10 +43,28 @@ const Home = () => {
   return (
     <div className="home-container">
       <Input handleSearch={handleSearch} />
-      
+
+      {/* Content Type Filter */}
+      <div className="filters">
+        <select onChange={handleContentTypeChange} value={contentType}>
+          <option value="movie">Movies</option>
+          <option value="series">TV Series</option>
+          <option value="episode">TV Series Episodes</option>
+        </select>
+
+        {/* Year Filter */}
+        <input
+          type="number"
+          placeholder="Enter Year"
+          value={year}
+          onChange={handleYearChange}
+        />
+      </div>
+
       {movies?.length > 0 ? (
         <>
           {/* Movie Grid/Table */}
+          
           <table className="movies-table">
             <thead>
               <tr>
@@ -65,8 +96,26 @@ const Home = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
-
+          </table>{/*
+        <div className="movies">
+          {movies?.map((movie) => {
+            return (
+                to={`movies/${movie.imdbID}`} 
+                className="text-link"
+                key={movie.imdbID}
+              >
+                <Card
+                  key={movie.imdbID}
+                  image={movie.Poster}
+                  title={movie.Title}
+                  year={movie.Year}
+                  addFavorite={(e) => favoriteHandler(movie, e)}
+                  isFavorite={movie.isFavorite}
+                />
+              </Link>
+            );
+          })}
+        </div>*/}
           {/* Pagination */}
           <div className="pagination">
             {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (

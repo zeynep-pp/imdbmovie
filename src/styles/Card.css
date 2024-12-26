@@ -16,6 +16,7 @@
   right: 10px;
   cursor: pointer;
   color: #fff700;
+  z-index: 2; /* Yıldız ikonunun ön planda olmasını sağla */
 }
 .card img {
   border-radius: 10px 10px 0px 0px;

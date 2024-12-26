@@ -11,10 +11,11 @@ const MovieApp = ({ children }) => {
   const [search, setSearch] = useState('Pokemon');  // Default search term set to "Pokemon"
   const [selectedMovie, setSelectedMovie] = useState('');
   const [year, setYear] = useState('');
+  const [contentType, setContentType] = useState('movie'); // Default: Movies
 
-  // Fetch movies with optional year filter
-  const fetchMovies = async (searchValue, year) => {
-    let url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchValue}`;
+  // Fetch movies with optional year and content type filter
+  const fetchMovies = async (searchValue, year, type) => {
+    let url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchValue}&type=${type}`;
     if (year) {
       url += `&y=${year}`;  // Add year filter to API query if year is provided
     }
@@ -27,32 +28,33 @@ const MovieApp = ({ children }) => {
     }
   };
 
-  // Use useEffect to fetch movies whenever search or year changes
+  // Use useEffect to fetch movies whenever search, year, or contentType changes
   useEffect(() => {
     if (search) {
-      fetchMovies(search, year);
+      fetchMovies(search, year, contentType);
     }
-  }, [search, year]);
+  }, [search, year, contentType]);
 
   // Add or remove from favorites
   const favoriteHandler = (movie, e) => {
     e.preventDefault();
-    const isFavorite = favorites.some(fav => fav.imdbID === movie.imdbID);
-    if (isFavorite) {
+    if (favorites.includes(movie)) {
       removeFavoriteMovie(movie);
     } else {
       addFavoriteMovie(movie);
     }
   };
 
-  // Remove movie from favorites
   const removeFavoriteMovie = (movie) => {
-    const newFavoriteList = favorites.filter(fav => fav.imdbID !== movie.imdbID);
+    movie.isFavorite = false;
+    const newFavoriteList = favorites.filter(
+      (fav) => fav.imdbID !== movie.imdbID
+    );
     setFavorites(newFavoriteList);
   };
 
-  // Add movie to favorites
   const addFavoriteMovie = (movie) => {
+    movie.isFavorite = true;
     const newFavoriteList = [...favorites, movie];
     setFavorites(newFavoriteList);
   };
@@ -74,6 +76,7 @@ const MovieApp = ({ children }) => {
         showDetail,
         selectedMovie,
         setYear, // Expose setYear to allow changing the year filter
+        setContentType, // Expose setContentType for content type selection
       }}
     >
       {children}
