@@ -6,10 +6,10 @@ import Card from "../components/Card";
 import "../styles/Home.css";
 
 const Home = () => {
-  const { setSearch, movies, favoriteHandler, setYear } = useContext(MovieContext);
+  const { setSearch, movies, favoriteHandler, setYear, setContentType } = useContext(MovieContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(10);
-  const [contentType, setContentType] = useState("movie"); // Default: Movies
+  //const [contentType, setContentType] = useState("movie"); // Default: Movies
   const [year, setYearFilter] = useState(""); // Year filter state
 
   // Handle search input change
@@ -46,7 +46,7 @@ const Home = () => {
 
       {/* Content Type Filter */}
       <div className="filters">
-        <select onChange={handleContentTypeChange} value={contentType}>
+        <select onChange={handleContentTypeChange} >
           <option value="movie">Movies</option>
           <option value="series">TV Series</option>
           <option value="episode">TV Series Episodes</option>
