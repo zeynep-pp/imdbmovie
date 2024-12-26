@@ -60,7 +60,7 @@ const Home = () => {
           <table className="table table-striped">
             <thead className="thead-dark">
               <tr>
-                <th>Title</th>
+                <th>Title - Detail Link</th>
                 <th>Release Date</th>
                 <th>IMDb ID</th>
                 <th>Favorite</th>
