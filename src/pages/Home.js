@@ -96,26 +96,7 @@ const Home = () => {
                 </tr>
               ))}
             </tbody>
-          </table>{/*
-        <div className="movies">
-          {movies?.map((movie) => {
-            return (
-                to={`movies/${movie.imdbID}`} 
-                className="text-link"
-                key={movie.imdbID}
-              >
-                <Card
-                  key={movie.imdbID}
-                  image={movie.Poster}
-                  title={movie.Title}
-                  year={movie.Year}
-                  addFavorite={(e) => favoriteHandler(movie, e)}
-                  isFavorite={movie.isFavorite}
-                />
-              </Link>
-            );
-          })}
-        </div>*/}
+          </table>
           {/* Pagination */}
           <div className="pagination">
             {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (
