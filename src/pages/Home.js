@@ -4,16 +4,14 @@ import { MovieContext } from "../context/MovieContext";
 import Input from "../components/Input";
 import Card from "../components/Card";
 import moment from "moment";
-import _ from "lodash";
 import "../styles/Home.scss";
-import '../styles/styles.scss';
-
+import "../styles/styles.scss";
 
 const Home = () => {
   const { setSearch, movies, favoriteHandler, setYear, setContentType } = useContext(MovieContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(10);
-  const [year, setYearFilter] = useState(""); // Year filter state
+  const [year, setYearFilter] = useState("");
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -21,7 +19,7 @@ const Home = () => {
 
   const handleYearChange = (e) => {
     setYearFilter(e.target.value);
-    setYear(e.target.value); // Update year in context
+    setYear(e.target.value);
   };
 
   const handleContentTypeChange = (e) => {
@@ -35,14 +33,12 @@ const Home = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    setSearch("Pokemon"); // Set default search to "Pokemon"
+    setSearch("Pokemon");
   }, []);
 
   return (
     <div className="home-container">
       <Input handleSearch={handleSearch} />
-
-      {/* Content Type Filter */}
       <div className="filters form-inline">
         <select className="form-control mb-2 mr-sm-2" onChange={handleContentTypeChange} defaultValue="movie">
           <option value="movie">Movies</option>
@@ -50,7 +46,6 @@ const Home = () => {
           <option value="episode">TV Series Episodes</option>
         </select>
 
-        {/* Year Filter */}
         <input
           type="number"
           className="form-control mb-2 mr-sm-2"
@@ -62,7 +57,6 @@ const Home = () => {
 
       {movies?.length > 0 ? (
         <>
-          {/* Movie Grid/Table */}
           <table className="table table-striped">
             <thead className="thead-dark">
               <tr>
@@ -96,18 +90,22 @@ const Home = () => {
             </tbody>
           </table>
 
-          {/* Pagination */}
-          <nav aria-label="Page navigation">
-            <ul className="pagination">
-              {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (
-                <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
-                  <button className="page-link" onClick={() => paginate(index + 1)}>
-                    {index + 1}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="pagination-container">
+            <span className="pagination-info">
+              Showing {indexOfFirstMovie + 1} to {indexOfLastMovie} of {movies.length} entries
+            </span>
+            <nav aria-label="Page navigation">
+              <ul className="pagination">
+                {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }, (_, index) => (
+                  <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
+                    <button className="page-link" onClick={() => paginate(index + 1)}>
+                      {index + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </>
       ) : (
         <div className="alert alert-warning" role="alert">
