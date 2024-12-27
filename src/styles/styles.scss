@@ -11,18 +11,44 @@ $body-color: #f8f9fa; // Light text color
 // Import the rest of Bootstrap styles
 @import '~bootstrap/scss/bootstrap';
 
-// Add custom overrides if necessary
+// Set background gradient for the body
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #1a1a1a, #3e3e3e); // Gradient from dark grey to a slightly lighter grey
+  background-size: 400% 400%; // Create a dynamic effect for the gradient
+  animation: gradientAnimation 10s ease infinite; // Animate the gradient for a dynamic feel
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+// Animation for the gradient effect
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Additional styling for headings and text
 h1, h2, h3, h4, h5, h6 {
-  color: #ffffff; // Ensure headings use light text
+  color: #ffcc00; // Gold color for headings, similar to IMDB logo color
 }
 
 button {
-  background-color: #1f1f1f;
+  background-color: #1c1c1c; // Dark button background
   border-color: #333;
-  color: #f8f9fa;
+  color: #f8f9fa; // Light button text
 
   &:hover {
-    background-color: #333;
-    border-color: #444;
+    background-color: #ffcc00; // Gold on hover
+    border-color: #e6a800; // Slightly lighter gold on hover
+    color: #1a1a1a; // Dark text when hovered
   }
 }
