@@ -8,18 +8,13 @@ import "../styles/Home.scss";
 import "../styles/styles.scss";
 
 const Home = () => {
-  const { setSearch, movies, favoriteHandler, setYear, setContentType } = useContext(MovieContext);
+  const { setSearch, movies, favoriteHandler, setContentType, handleYearChange } = useContext(MovieContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(10);
   const [year, setYearFilter] = useState("");
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
-  };
-
-  const handleYearChange = (e) => {
-    setYearFilter(e.target.value);
-    setYear(e.target.value);
   };
 
   const handleContentTypeChange = (e) => {
@@ -51,7 +46,10 @@ const Home = () => {
           className="form-control mb-2 mr-sm-2"
           placeholder="Enter Year"
           value={year}
-          onChange={handleYearChange}
+          onChange={(e) => {
+            setYearFilter(e.target.value);
+            handleYearChange(e); // Dispatch to Redux
+          }}
         />
       </div>
 

@@ -1,5 +1,7 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setYear } from '../redux/actions';
 
 export const MovieContext = createContext();
 
@@ -8,10 +10,14 @@ const API_KEY = '44a627e9'; // OMDb API Key
 const MovieApp = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [search, setSearch] = useState('Pokemon');  // Default search term set to "Pokemon"
+  const [search, setSearch] = useState('Pokemon'); // Default search term set to "Pokemon"
   const [selectedMovie, setSelectedMovie] = useState('');
-  const [year, setYear] = useState('');
   const [contentType, setContentType] = useState('movie'); // Default: Movies
+  
+  // Access year from Redux store
+  const year = useSelector((state) => state.year);
+
+  const dispatch = useDispatch();
 
   // Fetch movies with optional year and content type filter
   const fetchMovies = async (searchValue, year, type) => {
@@ -66,6 +72,11 @@ const MovieApp = ({ children }) => {
     setSelectedMovie(data);
   };
 
+  // Function to update the year using Redux
+  const handleYearChange = (e) => {
+    dispatch(setYear(e.target.value));
+  };
+
   return (
     <MovieContext.Provider
       value={{
@@ -75,8 +86,8 @@ const MovieApp = ({ children }) => {
         favoriteHandler,
         showDetail,
         selectedMovie,
-        setYear, // Expose setYear to allow changing the year filter
-        setContentType, // Expose setContentType for content type selection
+        setContentType,
+        handleYearChange, // Provide this function to Home component
       }}
     >
       {children}
